@@ -1,0 +1,61 @@
+-- DDL: CREATE TABLES
+CREATE TABLE students (
+    studentid INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50)
+);
+
+CREATE TABLE courses (
+    courseid INT PRIMARY KEY,
+    coursename VARCHAR(50),
+    credits INT
+);
+
+-- DML: INSERT DATA
+INSERT INTO student VALUES (1, 'Ali', 20, 'CS');
+INSERT INTO student VALUES (2, 'Dave', 21, 'Accounting');
+INSERT INTO course VALUES (3, 'Database', 3);
+INSERT INTO course VALUES (4, 'Marketing', 2);
+
+-- DQL: FETCH DATA
+SELECT * FROM student WHERE department = 'CS';
+
+-- DML: UPDATE DATA
+UPDATE student SET age = 21 WHERE studentid = 1;
+UPDATE student SET department = 'IT' WHERE name = 'Dave';
+UPDATE course SET credits = 4 WHERE coursename = 'Database';
+
+-- DML: DELETE DATA
+DELETE FROM student WHERE studentid = 2;
+DELETE FROM course WHERE coursename = 'Marketing';
+
+-- =============================================
+-- POSTGRESQL DCL COMMANDS (ERROR FREE)
+-- =============================================
+
+-- STEP 1: Create user (PostgreSQL syntax)
+CREATE USER user1 WITH PASSWORD 'password123';
+
+-- STEP 2: Grant permissions
+GRANT SELECT ON student TO user1;
+GRANT ALL PRIVILEGES ON student TO user1;
+GRANT SELECT, INSERT ON course TO user1;
+
+-- STEP 3: Revoke permissions
+REVOKE SELECT ON student FROM user1;
+REVOKE INSERT ON course FROM user1;
+REVOKE ALL PRIVILEGES ON student FROM user1;
+
+-- STEP 4: View permissions
+-- PostgreSQL mein SHOW GRANTS nahi hota, isliye yeh alternative hai:
+SELECT * FROM information_schema.table_privileges WHERE grantee = 'user1';
+
+-- DDL: ALTER TABLE
+ALTER TABLE student ADD COLUMN email VARCHAR(100);
+
+-- DDL: DROP TABLE (use carefully)
+-- DROP TABLE course;
+
+-- Optional: Delete user
+-- DROP USER user1;
